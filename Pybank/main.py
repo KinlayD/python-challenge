@@ -56,3 +56,12 @@ with open(input_file) as file:
     print(f'Greatest Increase in Profits: {list_month_change[max_increase_index]} (${max_increase})')
     print(f'Greatest Decrease in Profits: {list_month_change[max_decrease_index]} (${max_decrease})')
 
+    with open ("Financial_Analysis.txt", 'w') as f:
+        f.writelines("Financial Analysis\n")
+        f.writelines("------------------------------------\n")
+        f.writelines(f'Total Months: {total_months}\n')
+        f.writelines(f'Average Change: ${net_month_average}\n')
+        f.writelines(f'Greatest Increase in Profits: {list_month_change[max_increase_index]} (${max_increase})\n')
+        f.writelines(f'Greatest Decrease in Profits: {list_month_change[max_decrease_index]} (${max_decrease})\n')
+
+
