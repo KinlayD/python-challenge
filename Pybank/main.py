@@ -1,67 +1,85 @@
 # dependencies
-import os
 import csv
 
-# file path
-input_file = os.path.join("Resources", "budget_data.csv")
-
-# initialize variables: total number of months and total profit/loss
+# initialise variables to count the total number of months and net profit/loss
 total_months = 0
 total_net = 0
 
-# intitialize list to store months and change in profit/loss
-list_month_change = []
-list_change = []
+# initialise variable to store months and change in profit/loss
+months = []
+change = []
 
 
-# Read csv file
-with open(input_file) as file:
+
+# open the file and read
+filepath = "../Resources/budget_data.csv"
+with open(filepath) as file:
     reader = csv.reader(file)
 
-    headers = next(reader)
+# skip header 
+    # header stores the first row of the reader and then instructs the reader to return the next row
+    # header = ['Date', 'Profit/Losses']
+    header = next(reader)
 
-    # pass first row of budget data
+# store first row
+    # first_row stores the current (non_header) row of the reader and then instructs the reader to return the next row
+    # first row = ['Jan-2010', '867884']
     first_row = next(reader)
-    total_months = total_months + 1
-    total_net = total_net + int(first_row[1])
-    previous_net = int(first_row[1])
-    
-    # For loop
-    for row in reader:
 
+# count the first row and store to total_months
+    # total months = 0 + 1
+    total_months = total_months + 1
+
+# include the first row value from index = 1 (profit/losses) to the total_net
+    # total_net = 0 + 867884
+    total_net = total_net + int(first_row[1])
+
+# create a variable that is assigned for holding one of the two values in the profit/loss column that will be used to find the difference between
+# profit/loss in the current month and profit/loss in the previous month.
+# x1 will hold the value for the previous month.
+# x2 will hold the net difference between the current months profit/loss and the previous months profit/loss  
+    # x1 = 867884
+    x1 = int(first_row[1])
+
+# use a for loop to iterate through rows in reader
+    # 0th iteration:
+        # x2 = 984655 - 867884 = 116771
+        # x1 = 984655
+        # change = [116771]
+    # 1st iteration:
+        # x2 = 322013 - 984655 = -662642
+        # x1 = 322013
+        # change = [116771, -662642]
+    # 2nd iteration:
+        # # x2 = -69417 - 322013 = -391430
+        # x1 = -69417
+        # change = [116771, -662642, -391430]
+    # ...
+    # until the nth iteration
+    for row in reader:
         total_months = total_months + 1
         total_net = total_net + int(row[1])
 
-        net_change = int(row[1]) - previous_net 
-        previous_net = int(row[1])
-        list_change = list_change + [net_change]
-        list_month_change = list_month_change + [row[0]]
+        x2 = int(row[1]) - x1
+        x1 = int(row[1])
         
-        # Find max increase and max decrease in profit by month
-        max_increase = max(list_change)
-        max_increase_index = list_change.index(max_increase)
-        
-        max_decrease = min(list_change)
-        max_decrease_index = list_change.index(max_decrease)
+        change.append(x2)
+        months.append(row[0])
 
-    # Find average net change
-    net_month_average = round(sum(list_change) / len(list_change), 2)
-           
+# calculate the average of the changes in profit/losses over the period
+    avg_change = round(sum(change)/len(change), 2)
+
+# find the greatest increase in profits (date and amount) over the period
 
 
-    print("Financial Analysis")
-    print("------------------------------------")
-    print(f'Total Months: {total_months}')
-    print(f'Average Change: ${net_month_average}')    
-    print(f'Greatest Increase in Profits: {list_month_change[max_increase_index]} (${max_increase})')
-    print(f'Greatest Decrease in Profits: {list_month_change[max_decrease_index]} (${max_decrease})')
 
-    with open ("Financial_Analysis.txt", 'w') as f:
-        f.writelines("Financial Analysis\n")
-        f.writelines("------------------------------------\n")
-        f.writelines(f'Total Months: {total_months}\n')
-        f.writelines(f'Average Change: ${net_month_average}\n')
-        f.writelines(f'Greatest Increase in Profits: {list_month_change[max_increase_index]} (${max_increase})\n')
-        f.writelines(f'Greatest Decrease in Profits: {list_month_change[max_decrease_index]} (${max_decrease})\n')
-
-
+    print('-----------------')
+    print('total months:')
+    print(total_months)
+    print('-----------------')
+    print('net total:')
+    print(total_net)
+    print('-----------------')
+    print('average change:')
+    print(avg_change)
+    print('-----------------')
