@@ -5,11 +5,12 @@ import csv
 total_months = 0
 total_net = 0
 
-# initialise variable to store months and change in profit/loss
+# initialise variables to store months and change in profit/loss
 months = []
 change = []
 
-
+# initialise variables to store greatest increase/greatest decrease in profit/loss
+change_profit_loss_dict = {}
 
 # open the file and read
 filepath = "../Resources/budget_data.csv"
@@ -66,11 +67,18 @@ with open(filepath) as file:
         change.append(x2)
         months.append(row[0])
 
+# find the greatest increase in profit:
+    max_increase_value = max(change)
+    max_increase_index = change.index(max_increase_value)
+    month_max_increase = months[max_increase_index]
+
+# find the greatest decrease in profit:
+    max_decrease_value = min(change)
+    max_decrease_index = change.index(max_decrease_value)
+    month_max_decrease = months[max_decrease_index]
+
 # calculate the average of the changes in profit/losses over the period
     avg_change = round(sum(change)/len(change), 2)
-
-# find the greatest increase in profits (date and amount) over the period
-
 
 
     print('-----------------')
@@ -83,3 +91,10 @@ with open(filepath) as file:
     print('average change:')
     print(avg_change)
     print('-----------------')
+    print('greatest increase in profit:')
+    print(month_max_increase)
+    print(max_increase_value)
+    print('-----------------')
+    print('greatest decrease in profit')
+    print(month_max_decrease)
+    print(max_decrease_value)
