@@ -1,6 +1,5 @@
 # dependencies
 import csv
-from platform import libc_ver
 
 # create a variable to count total votes
 total_votes = 0
@@ -50,7 +49,7 @@ candidate_vote_index = candidate_votes.index(candidate_winner_votes)
 candidate_winner = candidates[candidate_vote_index]
 
 
-
+print("Total Votes")
 print(total_votes)
 print("-------------------")
 print("Khan")
@@ -70,20 +69,18 @@ print(o_tooley_v)
 print(o_tooley_p)
 print("Winner of the election")
 print(candidate_winner)
+print("-------------------")
 
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
-        
-
+# export as .txt 
+with open("PyPoll_Analysis.txt", "w") as PyPoll_Analysis:
+    PyPoll_Analysis.writelines("Election Results\n")
+    PyPoll_Analysis.writelines("------------------------\n")
+    PyPoll_Analysis.writelines(f"Total Votes: {total_votes}\n")
+    PyPoll_Analysis.writelines("------------------------\n")
+    PyPoll_Analysis.writelines(f"Khan: {khan_p}% ({khan_v})\n")
+    PyPoll_Analysis.writelines(f"Correy: {correy_p}% ({correy_v})\n")
+    PyPoll_Analysis.writelines(f"Li: {li_p}% ({li_v})\n")
+    PyPoll_Analysis.writelines(f"O'Tooley: {o_tooley_p}% ({o_tooley_v})\n")
+    PyPoll_Analysis.writelines("------------------------\n")
+    PyPoll_Analysis.writelines(f"Winner: {candidate_winner}\n")
+    PyPoll_Analysis.writelines("------------------------\n")

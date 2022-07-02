@@ -98,3 +98,13 @@ with open(filepath) as file:
     print('greatest decrease in profit')
     print(month_max_decrease)
     print(max_decrease_value)
+
+# export as .txt 
+with open("PyBank_Analysis.txt", "w") as PyBank_Analysis:
+    PyBank_Analysis.writelines("Financial Analysis\n")
+    PyBank_Analysis.writelines("------------------------\n")
+    PyBank_Analysis.writelines(f"Total Months: {total_months}\n")
+    PyBank_Analysis.writelines(f"Total: ${total_net}\n")
+    PyBank_Analysis.writelines(f"Average Change: ${avg_change}\n")
+    PyBank_Analysis.writelines(f"Greatest Increase in Profits: {month_max_increase} (${max_increase_value})\n")
+    PyBank_Analysis.writelines(f"Greatest Decrease in Profits: {month_max_decrease} (${max_decrease_value})\n")
